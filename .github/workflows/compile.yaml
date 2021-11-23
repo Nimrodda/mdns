@@ -1,4 +1,4 @@
-name: Compile Spark
+name: Compile mdns
 
 on:
   pull_request:
@@ -19,6 +19,9 @@ jobs:
     - name: compile
       run: | 
         cl mdns.c /Zi /Fdmdns.pdb /link /out:mdns.exe ws2_32.lib iphlpapi.lib
+    - name: list files
+      run: | 
+        dir
     - name: upload executable
       uses: actions/upload-artifact@v2
       with:
