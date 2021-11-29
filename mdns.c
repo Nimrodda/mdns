@@ -1,3 +1,5 @@
+#define PUBLIC
+
 #include "mdns.h"
 
 #ifdef __cplusplus
