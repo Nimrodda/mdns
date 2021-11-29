@@ -28,25 +28,27 @@ jobs:
         name: windows
         path: |
           mdns.exe
-  # mac-and-ubuntu:
-  #   runs-on: ${{matrix.os}}
-  #   strategy:
-  #     matrix:
-  #       os: [macos-latest, ubuntu-latest]
-  #   name: ${{matrix.os}}
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: compile
-  #       run: |
-  #         g++ -std=c++17 main.cpp -o spark
-  #     - name: run
-  #       run: |
-  #         ./spark test.spark
-  #       shell: bash
-  #     - name: upload executable
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: ${{matrix.os}}
-  #         path: |
-  #           spark
+  mac-and-ubuntu:
+    runs-on: ${{matrix.os}}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    name: ${{matrix.os}}
+    steps:
+      - uses: actions/checkout@v2
+      - name: build library
+        run: |
+          mkdir build
+          gcc -c -Wall -Werror mdns.c -fpic -o build/mdns.o
+          ar -cvq build/libmdns.a build/mdns.o
+      - name: build executable
+        run: |
+          gcc -Wall -Werror mdns_example.c build/libmdns.a -o build/mdns_example
+        shell: bash
+      - name: upload executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{matrix.os}}
+          path: |
+            build/
   
