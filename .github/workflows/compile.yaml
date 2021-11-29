@@ -39,11 +39,11 @@ jobs:
       - name: build library
         run: |
           mkdir build
-          gcc -c -Wall -Werror mdns.c -fpic -o build/mdns.o
+          gcc -c mdns.c -fpic -o build/mdns.o
           ar -cvq build/libmdns.a build/mdns.o
       - name: build executable
         run: |
-          gcc -Wall -Werror mdns_example.c build/libmdns.a -o build/mdns_example
+          gcc mdns_example.c build/libmdns.a -o build/mdns_example
         shell: bash
       - name: upload executable
         uses: actions/upload-artifact@v2
