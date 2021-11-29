@@ -18,7 +18,9 @@ jobs:
     - uses: ilammy/msvc-dev-cmd@v1.4.1
     - name: compile
       run: | 
-        cl mdns.c /Zi /Fdmdns.pdb /link /out:mdns.exe ws2_32.lib iphlpapi.lib
+        md build
+        cl /LD mdns.c /Zi /Fdmdns.pdb /link ws2_32.lib iphlpapi.lib
+        cl mdns_example.c mdns.lib /out:build\mdns_example.exe
     - name: list files
       run: | 
         dir
